@@ -1,0 +1,107 @@
+ntroduction
+In Python, virtual environments are a powerful tool for managing dependencies and ensuring that projects are isolated from each other. This is especially useful when working on multiple projects that require different versions of libraries or tools. In this assignment, I created a virtual environment, installed the requests library, and used it to make an API call. This document outlines the steps I took to create and use the virtual environment, install the library, and write a program leveraging the requests library.
+
+1. Understanding Virtual Environments in Python
+A virtual environment is a self-contained directory that contains a Python installation and a set of installed libraries. It allows you to manage dependencies for a project without affecting the global Python installation. This approach is helpful in avoiding version conflicts between different projects and ensuring that each project has exactly the libraries it needs.
+
+Tools for Creating Virtual Environments:
+venv: This is a built-in Python module for creating virtual environments.
+conda: A package manager and environment manager that works well for managing both Python and non-Python dependencies (often used with Anaconda).
+For this assignment, I used venv to create the virtual environment.
+
+2. Creating and Activating the Virtual Environment
+Steps:
+Creating a Virtual Environment: To create a virtual environment using venv, I opened the terminal (command prompt) and navigated to the project directory. Then, I ran the following command:
+
+bash
+Copy code
+python -m venv myenv
+This command created a directory called myenv which contains the virtual environment.
+
+Activating the Virtual Environment: After the virtual environment was created, I activated it:
+
+On Windows, I used the following command:
+bash
+Copy code
+myenv\Scripts\activate
+On macOS/Linux, I used:
+bash
+Copy code
+source myenv/bin/activate
+Once activated, the terminal prompt changed to show the name of the virtual environment (e.g., (myenv)), indicating that I was now working within the virtual environment.
+
+3. Installing the requests Library
+With the virtual environment activated, I installed the requests library, which is a popular Python library for making HTTP requests. I used pip, the Python package manager, to install it.
+
+Installation Command:
+bash
+Copy code
+pip install requests
+Verifying the Installation:
+To ensure that the library was successfully installed, I ran the following command:
+
+bash
+Copy code
+pip list
+This command displayed all the installed libraries in the virtual environment, including requests.
+
+4. Writing the Python Program to Make an API Call
+With the requests library installed, I wrote a Python program that makes an HTTP request to the API provided by JSONPlaceholder, a free API that returns random todo tasks.
+
+Python Code:
+python
+Copy code
+import requests
+
+# Make a GET request to the API
+url = "https://jsonplaceholder.typicode.com/todos/1"
+response = requests.get(url)
+
+# Check if the request was successful
+if response.status_code == 200:
+    data = response.json()  # Parse JSON response
+    print("Task ID:", data['id'])
+    print("Title:", data['title'])
+    print("Completed:", data['completed'])
+else:
+    print("Failed to retrieve data. HTTP Status code:", response.status_code)
+Program Explanation:
+I used the requests.get(url) method to send a GET request to the API.
+The response.status_code is checked to ensure the request was successful (HTTP 200).
+The response.json() method parses the JSON response and allows easy access to the data.
+The program prints the task ID, title, and whether the task is completed.
+5. Documenting the Steps and Issues Encountered
+Steps Taken:
+Created and activated the virtual environment.
+Installed the requests library using pip.
+Wrote the Python program to make an API call and handle the response.
+Issues Encountered:
+Issue: I initially forgot to activate the virtual environment and attempted to install the requests library globally. This led to confusion when running the program, as the requests library was not found.
+Solution: I ensured that the virtual environment was activated before installing the library. I also reinstalled the requests library inside the activated environment.
+6. Reflecting on the Benefits of Using Virtual Environments and pip
+Using virtual environments and the pip package manager offers several key benefits:
+
+Isolation: Each project can have its own isolated environment, preventing conflicts between different versions of libraries. This ensures that changes made in one project won't affect others.
+Better Dependency Management: With pip, managing dependencies is straightforward. Installing, upgrading, or removing libraries is simple and reliable.
+Reproducibility: By generating a requirements.txt file, it's easy to recreate the exact environment on another machine or for other developers. This is especially useful for collaboration.
+Clean Global Environment: Virtual environments keep the global Python environment clean and free from unnecessary packages, ensuring that the system Python environment remains stable.
+7. Generating the requirements.txt File
+To allow others to replicate the environment, I created a requirements.txt file using the following command:
+
+bash
+Copy code
+pip freeze > requirements.txt
+This file contains a list of all installed packages and their versions, which can be used to recreate the environment on another machine. To install the dependencies from this file, someone else can use the following command:
+
+bash
+Copy code
+pip install -r requirements.txt
+Conclusion
+Virtual environments are a powerful tool for managing Python projects and their dependencies. They help isolate projects, avoid conflicts, and ensure that each project has the necessary libraries. Using the pip package manager, I was able to install and manage the requests library to make an API call to a free public API.
+
+The experience of using a virtual environment and managing dependencies with pip highlighted the importance of these tools in ensuring clean, maintainable, and reproducible code. For anyone working on Python projects, adopting these practices will lead to more organized and reliable development workflows.
+
+Program Files:
+
+code.py: Contains the Python script for making an API call.
+requirements.txt: Contains the list of installed libraries and their versions.
